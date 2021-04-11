@@ -16,7 +16,7 @@
           <span class="helper-text" data-error="Заголовок обязателен!"></span>
         </div>
 
-        <div class="chips" ref="chips"></div>
+        <!-- <div class="chips" ref="chips"></div> -->
 
         <div class="input-field">
           <textarea
@@ -32,7 +32,7 @@
 
         <input type="text" ref="datepicker" />
 
-        <button class="btn" type="submit">Создать задачу</button>
+        <button class="btn red" type="submit">Создать</button>
       </form>
     </div>
   </div>
@@ -46,14 +46,14 @@ export default {
     return {
       description: "",
       title: "",
-      chips: null,
+      // chips: null,
       data: null,
     };
   },
   mounted() {
-    this.chips = M.Chips.init(this.$refs.chips, {
-      placeholder: "Хэштеги",
-    });
+    // this.chips = M.Chips.init(this.$refs.chips, {
+    //   placeholder: "Хэштеги",
+    // });
     this.data = M.Datepicker.init(this.$refs.datepicker, {
       format: "dd.mm.yyyy",
       defaultDate: new Date(),
@@ -66,22 +66,23 @@ export default {
         title: this.title,
         description: this.description,
         id: Math.floor(Math.random() * 100000),
-        status: "active",
-        tags: this.chips.chipsData,
-        date: this.data.data,
+        status: "Активна",
+        // tags: this.chips.chipsData,
+        data: this.data.date,
       };
 
-      console.log(task);
+      this.$store.dispatch("createTask", task);
+      this.$router.push("/list");
     },
   },
   unmounted() {
-    if (this.chips && this.chips.destroy) {
-      this.chips.destroy()
-    }
+    // if (this.chips && this.chips.destroy) {
+    //   this.chips.destroy();
+    // }
 
     if (this.data && this.data.destroy) {
-      this.data.destroy()
+      this.data.destroy();
     }
-  }
+  },
 };
 </script>
